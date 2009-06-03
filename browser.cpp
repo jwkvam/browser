@@ -1,5 +1,4 @@
 #include <QtCore/QEvent>
-
 #include <QtWebKit/QWebPage>
 #include <QtWebKit/QWebFrame>
 
@@ -17,9 +16,6 @@ Browser::Browser()
 	
 	command_mode = TRUE;
 	command = "";
-//	browser->installEventFilter(this);
-
-//	setFocusPolicy(Qt::StrongFocus);
 }
 
 void Browser::keyPressEvent(QKeyEvent *event) {
@@ -51,17 +47,3 @@ void Browser::keyPressEvent(QKeyEvent *event) {
 	}
 	else QWebView::keyPressEvent(event);
 }
-
-/*
-bool Browser::event(QEvent *event) {
-//		std::cout << "received key event" << std::endl;
-	if (event->type() == QEvent::KeyPress) {
-		std::cout << "received key event" << std::endl;
-		emit commandChanged(QString("a"));
-//		return true;
-	}
-
-	// TODO: should we be calling the inherited event 
-	// function instead of QWidget::event
-	return QWidget::event(event);
-}*/

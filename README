@@ -1,0 +1,12 @@
+COMPILE
+
+$ qmake -project
+
+Then add the following line to the .pro file.
+
+QT += webkit
+
+Then run the following commands
+
+$ qmake
+$ make
