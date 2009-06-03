@@ -1,0 +1,7 @@
+Makefile
+*.bak
+*~
+*.[oa]
+moc_*
+browser
+*.pro
