@@ -14,7 +14,7 @@ Browser::Browser()
 //	page()->mainFrame()->setScrollBarPolicy( Qt::Vertical,   Qt::ScrollBarAlwaysOff );
 //	page()->mainFrame()->setScrollBarPolicy( Qt::Horizontal, Qt::ScrollBarAlwaysOff );
 	
-	setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+	setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 	command_mode = TRUE;
 	command = "";
 }
