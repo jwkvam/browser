@@ -1,5 +1,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QBoxLayout>
+#include <QtGui/QProgressBar>
+#include <QtGui/QPixmap>
 //#include <QtGui/QLabel>
 //#include <QtGui/QWidget>
 //#include <QtWebKit/QWebView>
@@ -25,8 +27,22 @@ int main(int argc, char * argv[]) {
 	QWidget *widget = new QWidget;
 
 	QLabel *command = new QLabel;
-	ProgressLabel *progress = new ProgressLabel;
-	QLabel *address = new QLabel(QString("http://www.google.com"));
+	command->setWordWrap(true);
+
+//	ProgressLabel *progress = new ProgressLabel;
+	QProgressBar *progress = new QProgressBar;
+	progress->setRange(0,100);
+
+	UrlLabel *address = new UrlLabel; //(QString("http://www.google.com"));
+
+//	if ( address->pixmap() == NULL ) {
+//		std::cout << "out" << std::endl;
+//	}
+	QPixmap *pixmap = new QPixmap(100, 10);
+
+	pixmap->fill(Qt::white);
+	address->setPixmap(*pixmap);
+
 	UrlLabel *link_target = new UrlLabel; 
 	QLabel *throbber = new QLabel(QString("-"));
 
@@ -52,17 +68,25 @@ int main(int argc, char * argv[]) {
 	widget->setLayout(vlayout);
 	widget->show();
 	
-	// Connect signals
+	// command text
 	QObject::connect(browser, SIGNAL(commandChanged(const QString &)),
 			command, SLOT(setText(const QString &)));
+	// display hovered link
 	QObject::connect(browser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString &)),
-			link_target, SLOT(setUrl(const QString &, const QString &, const QString &)));
+			link_target, SLOT(setLink(const QString &, const QString &, const QString &)));
+	QObject::connect(browser, SIGNAL(urlChanged(const QUrl &)),
+			address, SLOT(setUrl(const QUrl &)));
+
+//	QObject::connect(browser, SIGNAL(loadStarted()),
+//			progress, SLOT(start()));
 	QObject::connect(browser, SIGNAL(loadStarted()),
-			progress, SLOT(start()));
+			progress, SLOT(reset()));
+//	QObject::connect(browser, SIGNAL(loadProgress(int)),
+//			progress, SLOT(progress(int)));
 	QObject::connect(browser, SIGNAL(loadProgress(int)),
-			progress, SLOT(progress(int)));
-	QObject::connect(browser, SIGNAL(loadFinished(bool)),
-			progress, SLOT(finish(bool)));
+			progress, SLOT(setValue(int)));
+//	QObject::connect(browser, SIGNAL(loadFinished(bool)),
+//			progress, SLOT(finish(bool)));
 
 	return app.exec();
 }

@@ -2,13 +2,13 @@
 #define URLLABEL_H
 
 #include <QtGui/QLabel>
+#include <QtCore/QUrl>
 
 class UrlLabel : public QLabel {
 	Q_OBJECT
-//public:
-//	UrlLabel();
 public slots:
-	void setUrl(const QString & link, const QString & title, const QString & textContent);
+	void setLink(const QString & link, const QString & title, const QString & textContent);
+	void setUrl(const QUrl & url);
 };
 
 #endif
