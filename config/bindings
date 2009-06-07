@@ -1,3 +1,12 @@
-bind	o			= new_uri
-bind	e			= edit_uri
-bind	r			= reload
+
+# format is as follows
+#
+ # key_sequence <whitespace> command <whitespace> arguments
+    
+
+b			back
+f			forward
+#o			new_uri
+#e			edit_uri
+r			reload
+i			toggle_insert_mode

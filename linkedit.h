@@ -1,14 +1,15 @@
-#ifndef URLLINEEDIT_H
-#define URLLINEEDIT_H
+#ifndef LINKEDIT_H
+#define LINKEDIT_H
 
 #include <QtGui/QLineEdit>
 #include <QtCore/QUrl>
 
-class UrlEdit : public QLineEdit {
+class LinkEdit : public QLineEdit {
 	Q_OBJECT
+public:
+	LinkEdit(QWidget *parent = 0);
 public slots:
 	void setLink(const QString & link, const QString & title, const QString & textContent);
-	void setUrl(const QUrl & url);
 };
 
-#endif
+#endif // LINKEDIT_H
