@@ -1,0 +1,6 @@
+#!/bin/sh
+
+qmake -project
+echo "QT += webkit" >> browser.pro
+qmake
+make
