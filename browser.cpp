@@ -37,17 +37,19 @@ Browser::Browser(QWidget * parent)
 	command = "";
 
 	QObject::connect( this, SIGNAL(urlChanged(const QUrl &)),
-			this, SLOT(resetCommandMode(void)) );
+			this, SLOT(setCommandMode(void)) );
 }
 
 /* protected functions */
+
 
 void Browser::initCommands() {
 	commands["back"]                    = &Browser::back;
 	commands["forward"]                 = &Browser::forward;
 	commands["reload"]                  = &Browser::reload;
-	commands["toggle_insert_mode"]      = &Browser::toggleInsertMode;
-//	commands["new_uri"] = &Browser::reload;
+	commands["set_insert_mode"]         = &Browser::setInsertMode;
+	commands["new_url"]                 = &Browser::urlNew;
+	commands["edit_url"]                = &Browser::urlEdit;
 }
 
 void Browser::keyPressEvent(QKeyEvent *event) {
@@ -76,12 +78,12 @@ void Browser::keyPressEvent(QKeyEvent *event) {
 	}
 	else if (event->key() == Qt::Key_Escape || 
 				(event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_C) ) {
-		commandMode = true;
+		setCommandMode();
 	}
 	else QWebView::keyPressEvent(event);
 }
 
-void Browser::parseBindings() {
+void Browser::parseBindings(void) {
 	std::string line, cmd, function, args;
 	std::ifstream myfile("config/bindings");
 	if (myfile.is_open()) {
@@ -109,10 +111,32 @@ void Browser::parseBindings() {
 	else std::cerr << "Unable to open bindings" << std::endl;
 }
 
-void Browser::toggleInsertMode(void) {
-	commandMode = false;
+void Browser::setInsertMode(void) {
+	if (commandMode) {
+		commandMode = false;
+		emit modeChanged(true);
+	}
 }
 
-void Browser::resetCommandMode(void) {
-	commandMode = true;
+void Browser::urlNew(void) {
+	emit editUrl(true);
+}
+
+void Browser::urlEdit(void) {
+	emit editUrl(false);
+}
+
+/* protected slots */
+
+void Browser::loadUrl(const QUrl & url) {
+	setFocus(Qt::OtherFocusReason);
+	std::cout << "loading url: " << url.toString().toStdString() << std::endl;
+	load(url);
+}
+
+void Browser::setCommandMode(void) {
+	if (!commandMode) {
+		commandMode = true;
+		emit modeChanged(false);
+	}
 }

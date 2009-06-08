@@ -26,12 +26,16 @@ public:
 
 signals:
 	void commandChanged(const QString);
+	void modeChanged(bool insertMode);
+	void editUrl(bool selectAll);
 
 protected:
 	void initCommands(void);
 	void keyPressEvent(QKeyEvent *event);
 	void parseBindings(void);
-	void toggleInsertMode(void);
+	void setInsertMode(void);
+	void urlEdit(void);
+	void urlNew(void);
 
 	QString command;
 	bool commandMode;
@@ -39,8 +43,8 @@ protected:
 	QHash<QString, void (Browser::*)(void)> commands;
 
 protected slots:
-	void resetCommandMode(void);
-
+	void setCommandMode(void);
+	void loadUrl(const QUrl & url);
 };
 
 #endif // BROWSER_H

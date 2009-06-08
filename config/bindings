@@ -1,12 +1,10 @@
-
 # format is as follows
 #
- # key_sequence <whitespace> command <whitespace> arguments
-    
+# key_sequence <whitespace> command <whitespace> arguments
 
 b			back
 f			forward
-#o			new_uri
-#e			edit_uri
+o			new_url
+e			edit_url
 r			reload
-i			toggle_insert_mode
+i			set_insert_mode
