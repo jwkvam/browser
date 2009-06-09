@@ -1,5 +1,11 @@
 COMPILE
 
+Run the compile script.
+
+$ ./compile
+
+OR
+
 $ qmake -project
 
 Then add the following line to the .pro file.
