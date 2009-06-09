@@ -14,6 +14,34 @@
 #include "commandedit.h"
 #include "insertlabel.h"
 
+void parseBindings(std::string file) {
+	std::string line, cmd, function, args;
+	std::ifstream myfile("config/bindings");
+	if (myfile.is_open()) {
+		while (! myfile.eof() ) {
+			cmd = function = args = "";
+			std::getline( myfile, line );
+			std::istringstream iss(line, std::istringstream::in);
+			iss >> cmd;
+			if (cmd != "" && cmd[0] != '#') {
+				iss >> function >> args;
+				if (function != "") {
+					if (cmd.length() == 1) {
+//						std::cout << cmd << " " << function << " " << args << std::endl;
+						shortcuts[ QPair<uint, char>(Qt::NoModifier, cmd[0]) ] = commands[QString::fromStdString(function)];
+					}
+				}
+				else {
+					std::cerr << "No function for command: [" << cmd << "]" << std::endl;
+					continue;
+				}
+			}
+		}
+		myfile.close();
+	}
+	else std::cerr << "Unable to open bindings" << std::endl;
+}
+
 int main(int argc, char * argv[]) {
 	QApplication app(argc, argv);
 	QWidget *widget = new QWidget;
@@ -66,6 +94,8 @@ int main(int argc, char * argv[]) {
 			address, SLOT(editUrl(bool)));
 	QObject::connect(address, SIGNAL(urlChanged(const QUrl &)),
 			browser, SLOT(loadUrl(const QUrl &)));
+	QObject::connect(address, SIGNAL(focusBrowser(void)),
+			browser, SLOT(receiveFocus(void)));
 
 	return app.exec();
 }

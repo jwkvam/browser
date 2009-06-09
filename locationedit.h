@@ -11,6 +11,7 @@ public:
 	LocationEdit(QWidget *parent = 0);
 
 signals:
+	void focusBrowser(void);
 	void urlChanged(const QUrl & url);
 
 public slots:

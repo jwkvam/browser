@@ -34,13 +34,14 @@ void LocationEdit::setUrl(const QUrl & url) {
 
 void LocationEdit::keyPressEvent(QKeyEvent *event) {
 	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
-		QUrl url(text(), QUrl::TolerantMode);
-		if (!url.isValid()) {
-			std::cout << "invalid!" << std::endl;
-		}
-		else
-			std::cout << "valid!" << std::endl;
+		QString url = text();
+		if (url.indexOf("://") == -1)
+			url = "http://" + url;
 		emit urlChanged( url );
+	}
+	if (event->key() == Qt::Key_Escape) {
+		setText(buffer);
+		emit focusBrowser();
 	}
 	else QLineEdit::keyPressEvent(event);
 }

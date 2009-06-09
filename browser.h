@@ -43,8 +43,10 @@ protected:
 	QHash<QString, void (Browser::*)(void)> commands;
 
 protected slots:
-	void setCommandMode(void);
 	void loadUrl(const QUrl & url);
+	void receiveCommand(const QString & command);
+	void receiveFocus(void);
+	void setCommandMode(void);
 };
 
 #endif // BROWSER_H

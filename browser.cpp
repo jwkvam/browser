@@ -60,6 +60,9 @@ void Browser::keyPressEvent(QKeyEvent *event) {
 		if ( shortcuts[ QPair<uint, char>(event->modifiers(), event->text().toStdString()[0]) ] ) {
 			(this->*shortcuts[ QPair<uint, char>(event->modifiers(), event->text().toStdString()[0]) ])(); 
 		}
+		else if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+			QWebView::keyPressEvent(event);
+		}
 //		else if (event->key() == Qt::Key_Return) {
 //			command = "";
 //			 TODO: execute command
@@ -130,8 +133,16 @@ void Browser::urlEdit(void) {
 
 void Browser::loadUrl(const QUrl & url) {
 	setFocus(Qt::OtherFocusReason);
-	std::cout << "loading url: " << url.toString().toStdString() << std::endl;
 	load(url);
+}
+
+void Browser::receiveCommand(const Qstring & command) {
+	(this->*shortcuts[ QPair<uint, char>(event->modifiers(), event->text().toStdString()[0]) ])(); 
+}
+
+void Browser::receiveFocus(void) {
+	std::cout << "received focus" << std::endl;
+	setFocus();
 }
 
 void Browser::setCommandMode(void) {
