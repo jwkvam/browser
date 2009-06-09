@@ -136,8 +136,8 @@ void Browser::loadUrl(const QUrl & url) {
 	load(url);
 }
 
-void Browser::receiveCommand(const Qstring & command) {
-	(this->*shortcuts[ QPair<uint, char>(event->modifiers(), event->text().toStdString()[0]) ])(); 
+void Browser::receiveCommand(const QString & command) {
+//	(this->*shortcuts[ QPair<uint, char>(event->modifiers(), event->text().toStdString()[0]) ])(); 
 }
 
 void Browser::receiveFocus(void) {

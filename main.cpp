@@ -7,6 +7,9 @@
 //#include <QtWebKit/QWebView>
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+//#include <cctype>
 
 #include "browser.h"
 #include "linkedit.h"
@@ -28,7 +31,7 @@ void parseBindings(std::string file) {
 				if (function != "") {
 					if (cmd.length() == 1) {
 //						std::cout << cmd << " " << function << " " << args << std::endl;
-						shortcuts[ QPair<uint, char>(Qt::NoModifier, cmd[0]) ] = commands[QString::fromStdString(function)];
+//						shortcuts[ QPair<uint, char>(Qt::NoModifier, cmd[0]) ] = commands[QString::fromStdString(function)];
 					}
 				}
 				else {
